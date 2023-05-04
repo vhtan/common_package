@@ -6,5 +6,6 @@ public struct CommonPackage {
     public typealias AutoBool = ParserValue<AnyToValueStrategy<BoolCodable>>
     
     public init() {
+        
     }
 }
