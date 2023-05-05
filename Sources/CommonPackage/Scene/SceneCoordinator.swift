@@ -8,16 +8,12 @@
 import UIKit
 import RxSwift
 
-class SceneCoordinator: SceneCoordinatorType {
+public class SceneCoordinator: SceneCoordinatorType {
     
     private var window: UIWindow
-    weak var currentViewController: UIViewController? {
-        didSet {
-            log.debug(currentViewController)
-        }
-    }
+    public weak var currentViewController: UIViewController?
     
-    required init(_ window: UIWindow) {
+    public required init(_ window: UIWindow) {
         self.window = window
         currentViewController = window.rootViewController
     }
@@ -30,11 +26,11 @@ class SceneCoordinator: SceneCoordinatorType {
         }
     }
     
-    func updateCurrentToVC(_ viewController: UIViewController) {
+    public func updateCurrentToVC(_ viewController: UIViewController) {
         self.currentViewController = SceneCoordinator.actualViewController(for: viewController)
     }
     
-    func transition(to scene: Scene, type: SceneTransition, animated: Bool, completion: TransitionCompletion?) {
+    public func transition(to scene: Scene, type: SceneTransition, animated: Bool, completion: TransitionCompletion?) {
         transition(to: scene.createViewController(), type: type, animated, completion: completion)
     }
     
@@ -77,7 +73,7 @@ class SceneCoordinator: SceneCoordinatorType {
         }
     }
     
-    func pop(animated: Bool, completion: TransitionCompletion?) {
+    public func pop(animated: Bool, completion: TransitionCompletion?) {
         if let navigationController = currentViewController?.navigationController {
             CATransaction.begin()
             CATransaction.setCompletionBlock { [unowned self] in
@@ -96,7 +92,7 @@ class SceneCoordinator: SceneCoordinatorType {
         }
     }
     
-    func dismiss(animated: Bool, completion: TransitionCompletion?) {
+    public func dismiss(animated: Bool, completion: TransitionCompletion?) {
         if let presenter = currentViewController?.presentingViewController {
             currentViewController?.dismiss(animated: animated, completion: { [unowned self] in
                 self.updateCurrentToVC(presenter)
@@ -115,7 +111,7 @@ class SceneCoordinator: SceneCoordinatorType {
         }
     }
     
-    func popTo(_ vc: UIViewController, animated: Bool = true, completion: TransitionCompletion?) {
+    public func popTo(_ vc: UIViewController, animated: Bool = true, completion: TransitionCompletion?) {
         if let navigationController = currentViewController?.navigationController {
             CATransaction.begin()
             CATransaction.setCompletionBlock { [unowned self] in
@@ -129,7 +125,7 @@ class SceneCoordinator: SceneCoordinatorType {
         }
     }
     
-    func popToRoot() {
+    public func popToRoot() {
         if let navigationController = currentViewController?.navigationController {
             CATransaction.begin()
             CATransaction.setCompletionBlock { [unowned self] in
