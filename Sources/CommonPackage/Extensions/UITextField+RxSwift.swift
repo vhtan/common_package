@@ -44,10 +44,7 @@ extension Reactive where Base: UITextField {
     }
 }
 
-class RxTextFieldDelegateProxy
-    : DelegateProxy<UITextField, UITextFieldDelegate>
-    , DelegateProxyType
-    , UITextFieldDelegate {
+class RxTextFieldDelegateProxy: DelegateProxy<UITextField, UITextFieldDelegate>, DelegateProxyType, UITextFieldDelegate {
 
     static func currentDelegate(for object: UITextField) -> UITextFieldDelegate? {
         return object.delegate

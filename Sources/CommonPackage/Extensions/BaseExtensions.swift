@@ -19,9 +19,11 @@ public extension Bundle {
     var releaseVersionNumber: String? {
         return infoDictionary?["CFBundleShortVersionString"] as? String
     }
+    
     var buildVersionNumber: String? {
         return infoDictionary?["CFBundleVersion"] as? String
     }
+    
     var osVersion: String {
         return UIDevice.current.systemVersion
     }
@@ -105,7 +107,7 @@ public extension UIDevice {
             case "AppleTV6,2":                                    return "Apple TV 4K"
             case "AudioAccessory1,1":                             return "HomePod"
             case "AudioAccessory5,1":                             return "HomePod mini"
-            case "i386", "x86_64", "arm64":                                return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
+            case "i386", "x86_64", "arm64":                       return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
             default:                                              return identifier
             }
             #elseif os(tvOS)
@@ -128,8 +130,6 @@ public extension UIDevice {
         }
     }
 }
-
-
 
 // MARK: - UIWindow
 public extension UIWindow {
@@ -160,7 +160,6 @@ public extension UINavigationController {
 
 // MARK: - UIViewController
 public extension UIViewController {
-    
     func addChild(viewController vc:UIViewController, inView contentView: UIView) {
         self.addChild(vc)
         contentView.addSubview(vc.view)
@@ -172,10 +171,6 @@ public extension UIViewController {
         self.removeFromParent()
         self.didMove(toParent: self.parent)
     }
-    
-    //func showAlert(title: String, message: String, cancelTitle: String, cancelHandler: (() -> Void)? = nil, otherButtonTitles: [String]? = nil, otherButtonsHandler: ((Int) -> Void)? = nil, onViewController vc: UIViewController) {
-    //        SAlertViewManager.shared.showAlert(title: title, message: message, cancelTitle: cancelTitle, cancelHandler: cancelHandler, otherButtonTitles: otherButtonTitles, otherButtonsHandler: otherButtonsHandler, onViewController: vc)
-    //    }
 }
 
 // MARK: - UIView
@@ -216,8 +211,6 @@ public extension UIView {
             }
         }
     }
-    
-    
     
     // Shadow radius
     @IBInspectable var shadowRadius: CGFloat {
@@ -395,8 +388,9 @@ public extension UITextField {
         }
         set {
             if newValue > 0 {
-                self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes:
-                                                                    [NSAttributedString.Key.foregroundColor: self.textColor?.withAlphaComponent(CGFloat(newValue)) ?? .white, NSAttributedString.Key.font: font ?? UIFont.systemFont(ofSize: 14)])
+                self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "",
+                                                                attributes: [
+                                                                    NSAttributedString.Key.foregroundColor: self.textColor?.withAlphaComponent(CGFloat(newValue)) ?? .white, NSAttributedString.Key.font: font ?? UIFont.systemFont(ofSize: 14)])
             }
         }
     }
@@ -468,8 +462,6 @@ public extension String {
     }
     
     var htmlToAttributedString: NSAttributedString? {
-//        var removeP = self.replace(string: "<p>", by: "")
-//        removeP = removeP.replace(string: "</p>", by: "")
         let str = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: 14\">\(self)</span>"
         guard let data = str.data(using: .utf16) else { return NSAttributedString() }
         do {
@@ -489,7 +481,6 @@ public extension String {
     }
     
     var htmlApplyFont: String {
-//        let str = "<span style=\"font-family: \(UIFont.systemFont(ofSize: 14).familyName); font-size: 60\">\(self)</span>"
         let str = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: 40\">\(self)</span>"
         return str
     }
@@ -499,7 +490,7 @@ public extension String {
     }
     
     func heightForHtmlString(labelWidth:CGFloat) -> CGFloat{
-        let label:UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: labelWidth, height: CGFloat.greatestFiniteMagnitude))
+        let label:UILabel = UILabel.init(frame: .init(x: 0, y: 0, width: labelWidth, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = UIFont.systemFont(ofSize: 16)
@@ -512,14 +503,20 @@ public extension String {
 public extension String {
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect,
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                            attributes: [.font: font],
+                                            context: nil)
         
         return ceil(boundingBox.height)
     }
     
     func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect,
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                            attributes: [.font: font],
+                                            context: nil)
         
         return ceil(boundingBox.width)
     }
@@ -638,21 +635,7 @@ public extension String {
         }
     }
     
-    func isValidPassword() -> Bool {     // password must contain special character
-        //        if self.count < 8 {
-        //            return false
-        //        }
-        //        let characterset = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-        //        if self.rangeOfCharacter(from: characterset.inverted) != nil {
-        //            return true
-        //        }
-        //        return false
-//        if self.count >= 4 {
-//            return true
-//        } else {
-//            return false
-//        }
-        
+    func isValidPassword() -> Bool {
         if self.count >= 6 {
             return true
         } else {
@@ -726,7 +709,6 @@ public extension String {
         }
         return str
     }
-    
 }
 
 public extension String {
@@ -825,30 +807,6 @@ public extension UIImage {
     }
     
     func cropSquare() -> UIImage? {
-        //        let cgimage = self.cgImage!
-        //        let contextImage: UIImage = UIImage(cgImage: cgimage)
-        //        let contextSize: CGSize = contextImage.size
-        //        var posX: CGFloat = 0.0
-        //        var posY: CGFloat = 0.0
-        //        var cgwidth: CGFloat = CGFloat(size.width)
-        //        var cgheight: CGFloat = CGFloat(size.height)
-        //        // See what size is longer and create the center off of that
-        //        if contextSize.width > contextSize.height {
-        //            posX = ((contextSize.width - contextSize.height) / 2)
-        //            posY = 0
-        //            cgwidth = contextSize.height
-        //            cgheight = contextSize.height
-        //        } else {
-        //            posX = 0
-        //            posY = ((contextSize.height - contextSize.width) / 2)
-        //            cgwidth = contextSize.width
-        //            cgheight = contextSize.width
-        //        }
-        //        let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
-        //        // Create bitmap image from context using the rect
-        //        let imageRef: CGImage = cgimage.cropping(to: rect)!
-        //        // Create a new image based on the imageRef and rotate back to the original orientation
-        //        let image: UIImage = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
         var point = CGPoint(x: 0, y: 0)
         let width = self.size.width
         let heigh = self.size.height
@@ -989,7 +947,6 @@ public extension UILabel {
     
     var isTruncated: Bool {
         guard let labelText = text else { return false }
-
         let labelTextSize = (labelText as NSString).boundingRect(
             with: CGSize(width: frame.size.width, height: .greatestFiniteMagnitude),
             options: .usesLineFragmentOrigin,
@@ -1002,14 +959,11 @@ public extension UILabel {
     func underline() {
         guard let text = self.text else { return }
         let attributedString = NSMutableAttributedString(string: text)
-        //NSAttributedStringKey.foregroundColor : UIColor.blue
         attributedString.addAttribute(NSAttributedString.Key.underlineColor, value: self.textColor ?? .black, range: NSRange(location: 0, length: text.count))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: self.textColor ?? .black, range: NSRange(location: 0, length: text.count))
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: text.count))
-//        self.setAttributedTitle(attributedString, for: .normal)
         self.attributedText = attributedString
     }
-
 }
 
 public extension UITextView {
@@ -1077,7 +1031,6 @@ public extension UIButton {
     func underline() {
         guard let text = self.titleLabel?.text else { return }
         let attributedString = NSMutableAttributedString(string: text)
-        //NSAttributedStringKey.foregroundColor : UIColor.blue
         attributedString.addAttribute(NSAttributedString.Key.underlineColor, value: self.titleColor(for: .normal)!, range: NSRange(location: 0, length: text.count))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: self.titleColor(for: .normal)!, range: NSRange(location: 0, length: text.count))
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: text.count))
@@ -1121,7 +1074,6 @@ public extension UIImageView {
     }
     
     func setImage(asset: PHAsset, completion: ((UIImage?) -> Void)? = nil) {
-//        image = Constants.Image.imPlaceholder
         let options = PHImageRequestOptions()
         options.isNetworkAccessAllowed = true
         PHCachingImageManager().requestImage(for: asset,
@@ -1205,9 +1157,9 @@ public extension Double {
         
         if modulo == 0 {
             return Double(num)
-        }else if modulo > 0.5 {
+        } else if modulo > 0.5 {
            return Double(num + 1)
-        }else{
+        } else{
             return Double(Double(num) + 0.5)
         }
     }
@@ -1241,7 +1193,7 @@ public extension Double {
         if distance < 1000{
             if (1...10).contains(distance) {
                 result = distance
-            }else{
+            } else {
                 
             }
             
@@ -1256,7 +1208,7 @@ public extension Double {
                 return "\(Int(result)) m"
             }
             return "\(formatter.string(from: (result.roundTo(places: 1) as NSNumber))!)m"
-        }else{
+        } else {
             let km = distance/1000
             return "\(formatter.string(from: (km.roundTo(places: 1) as NSNumber))!)km"
         }
@@ -1268,13 +1220,6 @@ public extension Double {
         formatter.locale = Locale.current
         let num: Double = self
         return "\(formatter.string(from: (num.roundTo(places: 1) as NSNumber))!)"
-        //        if num < 1000 {
-        //            return "\(formatter.string(from: (num.roundTo(places: 1) as NSNumber))!)"
-        //        } else if num < 10000000 {
-        //            return "\(formatter.string(from: ((num/1000).roundTo(places: 2) as NSNumber))!)k"
-        //        } else {
-        //            return "\(formatter.string(from: ((num/10000000).roundTo(places: 2) as NSNumber))!)m"
-        //        }
     }
     
     func toSnapbleString() -> String {
@@ -1476,10 +1421,6 @@ public extension UIView {
 
 public extension Data {
     func sizeMB() -> Double? {
-        //        let bcf = ByteCountFormatter()
-        //        bcf.allowedUnits = [.useMB] // optional: restricts the units to MB only
-        //        bcf.countStyle = .file
-        //        let string = bcf.string(fromByteCount: Int64(self.count))
         let bytes: Int = self.count
         return (Double(bytes) / 1024.0)/1024.0
     }
@@ -1911,9 +1852,11 @@ public extension StringProtocol {
     func index<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
         range(of: string, options: options)?.lowerBound
     }
+    
     func endIndex<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
         range(of: string, options: options)?.upperBound
     }
+    
     func indices<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> [Index] {
         var indices: [Index] = []
         var startIndex = self.startIndex
@@ -1926,6 +1869,7 @@ public extension StringProtocol {
         }
         return indices
     }
+    
     func ranges<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> [Range<Index>] {
         var result: [Range<Index>] = []
         var startIndex = self.startIndex
