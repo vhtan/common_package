@@ -38,9 +38,9 @@ public extension UIDevice {
             guard let value = element.value as? Int8, value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-
+        
         func mapToDevice(identifier: String) -> String { // swiftlint:disable:this cyclomatic_complexity
-            #if os(iOS)
+#if os(iOS)
             switch identifier {
             case "iPod5,1":                                       return "iPod touch (5th generation)"
             case "iPod7,1":                                       return "iPod touch (6th generation)"
@@ -110,14 +110,14 @@ public extension UIDevice {
             case "i386", "x86_64", "arm64":                       return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
             default:                                              return identifier
             }
-            #elseif os(tvOS)
+#elseif os(tvOS)
             switch identifier {
             case "AppleTV5,3": return "Apple TV 4"
             case "AppleTV6,2": return "Apple TV 4K"
             case "i386", "x86_64": return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
             default: return identifier
             }
-            #endif
+#endif
         }
         return mapToDevice(identifier: identifier)
     }()
@@ -126,7 +126,7 @@ public extension UIDevice {
         if #available(iOS 13.0,  *) {
             return UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.top ?? 0 > 20
         }else{
-         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
+            return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
         }
     }
 }
@@ -573,44 +573,44 @@ public extension String {
 public extension String {
     /// Creates a QR code for the current URL in the given color.
     func qrImage(using color: UIColor, logo: UIImage? = nil) -> UIImage? {
-
-       guard let tintedQRImage = qrImage?.tinted(using: color) else {
-          return nil
-       }
-
-       guard let logo = logo?.cgImage else {
-          return UIImage(ciImage: tintedQRImage)
-       }
-
-       guard let final = tintedQRImage.combined(with: CIImage(cgImage: logo)) else {
-         return UIImage(ciImage: tintedQRImage)
-       }
-
-     return UIImage(ciImage: final)
-   }
-
-   /// Returns a black and white QR code for this URL.
-   var qrImage: CIImage? {
-     guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
-     let qrData = self.data(using: String.Encoding.ascii)
-     qrFilter.setValue(qrData, forKey: "inputMessage")
-
-     let qrTransform = CGAffineTransform(scaleX: 12, y: 12)
-     return qrFilter.outputImage?.transformed(by: qrTransform)
-   }
+        
+        guard let tintedQRImage = qrImage?.tinted(using: color) else {
+            return nil
+        }
+        
+        guard let logo = logo?.cgImage else {
+            return UIImage(ciImage: tintedQRImage)
+        }
+        
+        guard let final = tintedQRImage.combined(with: CIImage(cgImage: logo)) else {
+            return UIImage(ciImage: tintedQRImage)
+        }
+        
+        return UIImage(ciImage: final)
+    }
+    
+    /// Returns a black and white QR code for this URL.
+    var qrImage: CIImage? {
+        guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        let qrData = self.data(using: String.Encoding.ascii)
+        qrFilter.setValue(qrData, forKey: "inputMessage")
+        
+        let qrTransform = CGAffineTransform(scaleX: 12, y: 12)
+        return qrFilter.outputImage?.transformed(by: qrTransform)
+    }
     
     func barCode() -> UIImage? {
         let data = self.data(using: String.Encoding.ascii)
-
+        
         if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
             let transform = CGAffineTransform(scaleX: 3, y: 3)
-
+            
             if let output = filter.outputImage?.transformed(by: transform) {
                 return UIImage(ciImage: output)
             }
         }
-
+        
         return nil
     }
 }
@@ -693,12 +693,12 @@ public extension String {
             if let _ = regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSMakeRange(0, self.count)) {
                 return true
             }
-
+            
         } catch {
             debugPrint(error.localizedDescription)
             return false
         }
-
+        
         return false
     }
     
@@ -872,21 +872,21 @@ public extension UILabel {
     func appendImage(image: UIImage?, spacing: Int? = 0) {
         // create an NSMutableAttributedString that we'll append everything to
         let fullString = NSMutableAttributedString(string: self.text ?? "")
-
+        
         // create our NSTextAttachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = image
-
+        
         // wrap the attachment in its own attributed string so we can append it
         let imageString = NSAttributedString(attachment: imageAttachment)
-
+        
         // add the NSTextAttachment wrapper to our full string, then add some more text.
         if let spacing = spacing{
             fullString.append(NSAttributedString(string: "".duplicateWhiteSpace(spacing)))
         }
         fullString.append(imageString)
-
-
+        
+        
         // draw the result in a label
         self.attributedText = fullString
     }
@@ -896,7 +896,7 @@ public extension UILabel {
             return
         }
         let readMoreText: String = trailingText + moreText
-
+        
         let lengthForVisibleString: Int = self.vissibleTextLength
         let mutableString: String = self.text!
         let trimmedString: String? = (mutableString as NSString).replacingCharacters(in: NSRange(location: lengthForVisibleString, length: ((self.text?.count)! - lengthForVisibleString)), with: "")
@@ -907,18 +907,18 @@ public extension UILabel {
         answerAttributed.append(readMoreAttributed)
         self.attributedText = answerAttributed
     }
-
+    
     var vissibleTextLength: Int {
         let font: UIFont = self.font
         let mode: NSLineBreakMode = self.lineBreakMode
         let labelWidth: CGFloat = self.frame.size.width
         let labelHeight: CGFloat = self.frame.size.height
         let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
-
+        
         let attributes: [AnyHashable: Any] = [NSAttributedString.Key.font: font]
         let attributedText = NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
         let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
-
+        
         if boundingRect.size.height > labelHeight {
             var index: Int = 0
             var prev: Int = 0
@@ -952,7 +952,7 @@ public extension UILabel {
             options: .usesLineFragmentOrigin,
             attributes: [.font: font!],
             context: nil).size
-
+        
         return labelTextSize.height > bounds.size.height
     }
     
@@ -1136,7 +1136,7 @@ public extension Date {
     func startOfMonth() -> Date {
         return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
     }
-
+    
     func endOfMonth() -> Date {
         return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
     }
@@ -1158,7 +1158,7 @@ public extension Double {
         if modulo == 0 {
             return Double(num)
         } else if modulo > 0.5 {
-           return Double(num + 1)
+            return Double(num + 1)
         } else{
             return Double(Double(num) + 0.5)
         }
@@ -1330,7 +1330,7 @@ public extension UIView {
             blurredImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
-
+    
     func unblur() {
         subviews.forEach { subview in
             if subview.tag == 100 {
@@ -1338,29 +1338,29 @@ public extension UIView {
             }
         }
     }
-
+    
     private func getBlurryImage(_ blurRadius: Double = 2.5) -> UIImage? {
         UIGraphicsBeginImageContext(bounds.size)
         layer.render(in: UIGraphicsGetCurrentContext()!)
         guard let image = UIGraphicsGetImageFromCurrentImageContext(),
-            let blurFilter = CIFilter(name: "CIGaussianBlur") else {
+              let blurFilter = CIFilter(name: "CIGaussianBlur") else {
             UIGraphicsEndImageContext()
             return nil
         }
         UIGraphicsEndImageContext()
-
+        
         blurFilter.setDefaults()
-
+        
         blurFilter.setValue(CIImage(image: image), forKey: kCIInputImageKey)
         blurFilter.setValue(blurRadius, forKey: kCIInputRadiusKey)
-
+        
         var convertedImage: UIImage?
         let context = CIContext(options: nil)
         if let blurOutputImage = blurFilter.outputImage,
-            let cgImage = context.createCGImage(blurOutputImage, from: blurOutputImage.extent) {
+           let cgImage = context.createCGImage(blurOutputImage, from: blurOutputImage.extent) {
             convertedImage = UIImage(cgImage: cgImage)
         }
-
+        
         return convertedImage
     }
 }
@@ -1779,7 +1779,7 @@ public extension UITableView {
 }
 
 public extension Reactive where Base: UICollectionView {
-
+    
     func loadMore(withOffsetY offset: CGFloat) -> Observable<Void> {
         return self.contentOffset.map { (point) -> Bool in
             let maximumOffset = self.base.contentSize.height - self.base.frame.size.height
@@ -1788,7 +1788,7 @@ public extension Reactive where Base: UICollectionView {
         .filter { $0 }
         .mapToVoid()
     }
-
+    
     func loadMore(withOffsetX offset: CGFloat) -> Observable<Void> {
         return contentOffset.map { (point) -> Bool in
             let maximumOffset = self.base.contentSize.width - self.base.frame.size.width
@@ -1813,7 +1813,7 @@ public extension Reactive where Base: UIScrollView {
             .filter({ $0 })
             .mapToVoid()
     }
-
+    
     var scrolling: Observable<Bool> {
         return contentOffset.map { (point) -> Bool in
             if (point.y >= (self.base.contentSize.height - self.base.frame.size.height - 1)) {
@@ -1862,10 +1862,10 @@ public extension StringProtocol {
         var startIndex = self.startIndex
         while startIndex < endIndex,
               let range = self[startIndex...]
-                .range(of: string, options: options) {
+            .range(of: string, options: options) {
             indices.append(range.lowerBound)
             startIndex = range.lowerBound < range.upperBound ? range.upperBound :
-                index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
+            index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
         }
         return indices
     }
@@ -1875,10 +1875,10 @@ public extension StringProtocol {
         var startIndex = self.startIndex
         while startIndex < endIndex,
               let range = self[startIndex...]
-                .range(of: string, options: options) {
+            .range(of: string, options: options) {
             result.append(range)
             startIndex = range.lowerBound < range.upperBound ? range.upperBound :
-                index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
+            index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
         }
         return result
     }
@@ -1954,13 +1954,13 @@ public extension UIAlertAction {
 public extension Array where Element:Equatable {
     func removeDuplicates() -> [Element] {
         var result = [Element]()
-
+        
         for value in self {
             if result.contains(value) == false {
                 result.append(value)
             }
         }
-
+        
         return result
     }
 }
@@ -2111,51 +2111,51 @@ public extension FileManager {
 }
 
 public extension CIImage {
-  /// Inverts the colors and creates a transparent image by converting the mask to alpha.
-  /// Input image should be black and white.
-  var transparent: CIImage? {
-     return inverted?.blackTransparent
-  }
-
-  /// Inverts the colors.
-  var inverted: CIImage? {
-      guard let invertedColorFilter = CIFilter(name: "CIColorInvert") else { return nil }
-
-    invertedColorFilter.setValue(self, forKey: "inputImage")
-    return invertedColorFilter.outputImage
-  }
-
-  /// Converts all black to transparent.
-  var blackTransparent: CIImage? {
-      guard let blackTransparentFilter = CIFilter(name: "CIMaskToAlpha") else { return nil }
-    blackTransparentFilter.setValue(self, forKey: "inputImage")
-    return blackTransparentFilter.outputImage
-  }
-
-  /// Applies the given color as a tint color.
-  func tinted(using color: UIColor) -> CIImage? {
-     guard
-        let transparentQRImage = transparent,
-        let filter = CIFilter(name: "CIMultiplyCompositing"),
-        let colorFilter = CIFilter(name: "CIConstantColorGenerator") else { return nil }
-
-    let ciColor = CIColor(color: color)
-    colorFilter.setValue(ciColor, forKey: kCIInputColorKey)
-    let colorImage = colorFilter.outputImage
-
-    filter.setValue(colorImage, forKey: kCIInputImageKey)
-    filter.setValue(transparentQRImage, forKey: kCIInputBackgroundImageKey)
-
-    return filter.outputImage!
-  }
+    /// Inverts the colors and creates a transparent image by converting the mask to alpha.
+    /// Input image should be black and white.
+    var transparent: CIImage? {
+        return inverted?.blackTransparent
+    }
+    
+    /// Inverts the colors.
+    var inverted: CIImage? {
+        guard let invertedColorFilter = CIFilter(name: "CIColorInvert") else { return nil }
+        
+        invertedColorFilter.setValue(self, forKey: "inputImage")
+        return invertedColorFilter.outputImage
+    }
+    
+    /// Converts all black to transparent.
+    var blackTransparent: CIImage? {
+        guard let blackTransparentFilter = CIFilter(name: "CIMaskToAlpha") else { return nil }
+        blackTransparentFilter.setValue(self, forKey: "inputImage")
+        return blackTransparentFilter.outputImage
+    }
+    
+    /// Applies the given color as a tint color.
+    func tinted(using color: UIColor) -> CIImage? {
+        guard
+            let transparentQRImage = transparent,
+            let filter = CIFilter(name: "CIMultiplyCompositing"),
+            let colorFilter = CIFilter(name: "CIConstantColorGenerator") else { return nil }
+        
+        let ciColor = CIColor(color: color)
+        colorFilter.setValue(ciColor, forKey: kCIInputColorKey)
+        let colorImage = colorFilter.outputImage
+        
+        filter.setValue(colorImage, forKey: kCIInputImageKey)
+        filter.setValue(transparentQRImage, forKey: kCIInputBackgroundImageKey)
+        
+        return filter.outputImage!
+    }
     
     /// Combines the current image with the given image centered.
     func combined(with image: CIImage) -> CIImage? {
-      guard let combinedFilter = CIFilter(name: "CISourceOverCompositing") else { return nil }
-      let centerTransform = CGAffineTransform(translationX: extent.midX - (image.extent.size.width / 2), y: extent.midY - (image.extent.size.height / 2))
-      combinedFilter.setValue(image.transformed(by: centerTransform), forKey: "inputImage")
-      combinedFilter.setValue(self, forKey: "inputBackgroundImage")
-      return combinedFilter.outputImage!
+        guard let combinedFilter = CIFilter(name: "CISourceOverCompositing") else { return nil }
+        let centerTransform = CGAffineTransform(translationX: extent.midX - (image.extent.size.width / 2), y: extent.midY - (image.extent.size.height / 2))
+        combinedFilter.setValue(image.transformed(by: centerTransform), forKey: "inputImage")
+        combinedFilter.setValue(self, forKey: "inputBackgroundImage")
+        return combinedFilter.outputImage!
     }
 }
 
@@ -2206,7 +2206,7 @@ public extension String {
         let strLat = components[0].trimmed
         let strLng = components[1].trimmed
         if let dLat = Double(strLat),
-            let dLng = Double(strLng) {
+           let dLng = Double(strLng) {
             return CLLocationCoordinate2D(latitude: dLat, longitude: dLng)
         }
         return nil
@@ -2338,7 +2338,9 @@ public extension String {
 public extension String {
     var asAttributedString: NSAttributedString? {
         guard let data = self.data(using: .utf8) else { return nil }
-        return try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+        return try? NSAttributedString(data: data,
+                                       options: [.documentType: NSAttributedString.DocumentType.html],
+                                       documentAttributes: nil)
     }
 }
 
@@ -2372,9 +2374,25 @@ public extension UserDefaults {
         self.set(obj, forKey: key.rawValue)
         self.synchronize()
     }
-
+    
     func removeObject<E: RawRepresentable>(for key: E) where E.RawValue == String {
         self.removeObject(forKey: key.rawValue)
         self.synchronize()
+    }
+}
+
+public extension NotificationCenter {
+    func post<E: RawRepresentable>(notificationKey: E, object: Any? = nil) where E.RawValue == String {
+        var notification = Notification(name: Notification.Name(rawValue: notificationKey.rawValue))
+        notification.object = object
+        post(notification)
+    }
+    
+    func addObserver<E: RawRepresentable>(forNotificationKey notificationKey: E,
+                                          callback: @escaping (Any?) -> Void) where E.RawValue == String {
+        let name = Notification.Name(rawValue: notificationKey.rawValue)
+        addObserver(forName: name, object: nil, queue: nil) { (notification) in
+            callback(notification.object)
+        }
     }
 }
