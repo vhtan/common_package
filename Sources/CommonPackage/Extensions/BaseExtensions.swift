@@ -2362,3 +2362,19 @@ public extension Encodable {
         return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
     }
 }
+
+public extension UserDefaults {
+    func object<E: RawRepresentable>(for key: E) -> Any? where E.RawValue == String {
+        return self.object(forKey: key.rawValue)
+    }
+    
+    func setObject<E: RawRepresentable>(_ obj: Any?, for key: E) where E.RawValue == String {
+        self.set(obj, forKey: key.rawValue)
+        self.synchronize()
+    }
+
+    func removeObject<E: RawRepresentable>(for key: E) where E.RawValue == String {
+        self.removeObject(forKey: key.rawValue)
+        self.synchronize()
+    }
+}
