@@ -10,7 +10,7 @@ import UIKit
 open class Router: NSObject {
     public static let shared = Router()
     
-    private var coordinator: SceneCoordinator!
+    public private (set) var coordinator: SceneCoordinator!
     
     public convenience init(window: UIWindow) {
         self.init()
