@@ -8,7 +8,6 @@
 import UIKit
 
 open class Router: NSObject {
-    public static let shared = Router()
     
     public private (set) var coordinator: SceneCoordinator!
     
