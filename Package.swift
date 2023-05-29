@@ -51,7 +51,8 @@ let package = Package(
                 .product(name: "RxSwiftExt", package: "RxSwiftExt"),
                 .product(name: "Cosmos", package: "Cosmos"),
                 .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
-                .product(name: "FacebookCore", package: "facebook-ios-sdk")
+                .product(name: "FacebookCore", package: "facebook-ios-sdk"),
+                .product(name: "FacebookLogin", package: "facebook-ios-sdk")
             ]),
         .testTarget(
             name: "CommonPackageTests",
