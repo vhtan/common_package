@@ -13,17 +13,17 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/malcommac/SwiftDate.git", from: "5.0.0"),
-        .package(url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.8"),
-        .package(url: "https://github.com/DaveWoodCom/XCGLogger.git", from: "7.0.0"),
-        .package(url: "https://github.com/ninjaprox/NVActivityIndicatorView.git", from: "5.0.0"),
-        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "3.0.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.1"),
-        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.5.0"),
+        .package(url: "https://github.com/malcommac/SwiftDate.git", from: "7.0.0"),
+        .package(url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.0"),
+        .package(url: "https://github.com/DaveWoodCom/XCGLogger.git", from: "7.0.1"),
+        .package(url: "https://github.com/ninjaprox/NVActivityIndicatorView.git", from: "5.1.1"),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.2.2"),
+        .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.6.0"),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.6.0"),
         .package(url: "https://github.com/eddiekaiger/SwiftyAttributes.git", from: "5.3.0"),
         .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4"),
-        .package(url: "https://github.com/Juanpe/SkeletonView.git", from: "1.7.0"),
-        .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.0.1"),
+        .package(url: "https://github.com/Juanpe/SkeletonView.git", from: "1.30.4"),
+        .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.1.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
