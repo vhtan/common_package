@@ -24,6 +24,9 @@ let package = Package(
         .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4"),
         .package(url: "https://github.com/Juanpe/SkeletonView.git", from: "1.30.4"),
         .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.1.0"),
+        .package(url: "https://github.com/evgenyneu/Cosmos.git", branch: "master"),
+        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "6.2.4"),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "9.3.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -42,7 +45,10 @@ let package = Package(
                 .product(name: "SwiftyAttributes", package: "SwiftyAttributes"),
                 .product(name: "RxGesture", package: "RxGesture"),
                 .product(name: "SkeletonView", package: "SkeletonView"),
-                .product(name: "RxSwiftExt", package: "RxSwiftExt")
+                .product(name: "RxSwiftExt", package: "RxSwiftExt"),
+                .product(name: "Cosmos", package: "Cosmos"),
+                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
+                .product(name: "FacebookCore", package: "facebook-ios-sdk")
             ]),
         .testTarget(
             name: "CommonPackageTests",
