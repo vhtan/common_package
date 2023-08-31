@@ -26,7 +26,7 @@ let package = Package(
         .package(url: "https://github.com/eddiekaiger/SwiftyAttributes.git", from: "5.3.0"),
         .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4"),
         .package(url: "https://github.com/Juanpe/SkeletonView.git", from: "1.30.4"),
-        .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.1.0"),
+        .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.2.0"),
         .package(url: "https://github.com/evgenyneu/Cosmos.git", branch: "master"),
         .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
         .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "16.1.3"),
