@@ -17,19 +17,19 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/malcommac/SwiftDate.git", from: "7.0.0"),
-        .package(url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.0"),
+        .package(url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "8.0.3"),
         .package(url: "https://github.com/DaveWoodCom/XCGLogger.git", from: "7.0.1"),
-        .package(url: "https://github.com/ninjaprox/NVActivityIndicatorView.git", from: "5.1.1"),
+        .package(url: "https://github.com/ninjaprox/NVActivityIndicatorView.git", from: "5.2.0"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.2.2"),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.6.0"),
-        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.6.0"),
+        .package(url: "https://github.com/SnapKit/SnapKit.git", from: "6.0.0"),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.10.2"),
         .package(url: "https://github.com/eddiekaiger/SwiftyAttributes.git", from: "5.3.0"),
         .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4"),
-        .package(url: "https://github.com/Juanpe/SkeletonView.git", from: "1.30.4"),
-        .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.2.0"),
+        .package(url: "https://github.com/Juanpe/SkeletonView.git", from: "1.31.0"),
+        .package(url: "https://github.com/RxSwiftCommunity/RxSwiftExt.git", from: "6.2.1"),
         .package(url: "https://github.com/evgenyneu/Cosmos.git", branch: "master"),
-        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "16.1.3"),
+        // .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
+        // .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "16.1.3"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -50,9 +50,9 @@ let package = Package(
                 .product(name: "SkeletonView", package: "SkeletonView"),
                 .product(name: "RxSwiftExt", package: "RxSwiftExt"),
                 .product(name: "Cosmos", package: "Cosmos"),
-                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
-                .product(name: "FacebookCore", package: "facebook-ios-sdk"),
-                .product(name: "FacebookLogin", package: "facebook-ios-sdk")
+                // .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
+                // .product(name: "FacebookCore", package: "facebook-ios-sdk"),
+                // .product(name: "FacebookLogin", package: "facebook-ios-sdk")
             ]),
         .testTarget(
             name: "CommonPackageTests",
