@@ -19,12 +19,17 @@ public protocol ParserCodableStrategy {
 public struct ParserValue<Strategy: ParserCodableStrategy>: Codable {
     private let value: Strategy.RawValue?
     public var wrappedValue: Strategy.Result?
-    
+
+    public init(wrappedValue: Strategy.Result?) {
+        self.wrappedValue = wrappedValue
+        self.value = Strategy.encode(wrappedValue)
+    }
+
     public init(from decoder: Decoder) throws {
         self.value = try Strategy.RawValue(from: decoder)
         self.wrappedValue = try Strategy.decode(value)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         try value.encode(to: encoder)
     }
